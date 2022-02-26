@@ -6,14 +6,29 @@ from splinter import Browser
 from bs4 import BeautifulSoup as soup
 from webdriver_manager.chrome import ChromeDriverManager
 import pandas as pd
+import datetime as dt
 
-# set up Splinter
-executable_path = {'executable_path': ChromeDriverManager().install()}
-browser = Browser('chrome', **executable_path, headless=False)
+def scrape_all():
 
+    # set up Splinter / Initiate headless driver for deployment
+    executable_path = {'executable_path': ChromeDriverManager().install()}
+    browser = Browser('chrome', **executable_path, headless=True)
+
+    news_title, news_paragraph = mars_news(browser)
+
+    # run all scraping functions and store results in dict
+    data = {
+        'news_title': news_title,
+        'news_paragraph': news_paragraph,
+        'featured_image': featured_image(browser),
+        'facts': mars_facts(),
+        'last_modified': dt.datetime.now()}
+
+    # stop webdriver and return data
+    browser.quit()
+    return data
 
 ## ARTICLE SCRAPING
-# def mars news app
 def mars_news(browser):
 
     # visit the mars nasa news site
@@ -41,7 +56,6 @@ def mars_news(browser):
     return news_title, news_p
 
 ## IMAGE SCRAPING FROM JPL
-# def featured_image app
 def featured_imaged(browser):
 
     # visit url
@@ -71,7 +85,6 @@ def featured_imaged(browser):
     return img_url
 
 ## GATHERING MARS FACTS
-# def mars facts app
 def mars_facts():
 
     #try / except clause
@@ -87,7 +100,9 @@ def mars_facts():
     df.set_index('Description', inplace=True)
     
     # convert df into HTML format, add bootstrap
-    return df.to_html()
+    return df.to_html(classes='table table-striped')
 
-browser.quit()
+if __name__ == '__main__':
+    # if running as script, print scraped data
+    print(scrape_all())
 
