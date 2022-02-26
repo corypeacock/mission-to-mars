@@ -80,7 +80,7 @@ def featured_imaged(browser):
         return None
 
     # add base url to create absolute url
-     img_url = f'https://spaceimages=mars.com/{img_url_rel}'
+    img_url = f'https://spaceimages=mars.com/{img_url_rel}'
     
     return img_url
 
