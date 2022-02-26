@@ -56,7 +56,7 @@ def mars_news(browser):
     return news_title, news_p
 
 ## IMAGE SCRAPING FROM JPL
-def featured_imaged(browser):
+def featured_image(browser):
 
     # visit url
     url = 'https://spaceimages-mars.com'
