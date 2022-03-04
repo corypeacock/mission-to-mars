@@ -136,7 +136,7 @@ def hemi_scrape(browser):
 
         for li in img_list:
             url_scrape = li.find('a')['href']
-            if '.tif' in url_scrape:
+            if '.jpg' in url_scrape:
                 enhanced_url = f'https://marshemispheres.com/{url_scrape}'
                 hemispheres['img_url'] = enhanced_url
                 hemispheres['title'] = title
